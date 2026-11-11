@@ -1,4 +1,6 @@
 let editingStudentId = null;
+const url =
+  "https://crudcrud.com/api/8141ad1b0cd94cf99e68c293c5431c25/students";
 
 function handleFormSubmit(event) {
   event.preventDefault();
@@ -11,10 +13,7 @@ function handleFormSubmit(event) {
 
   if (editingStudentId !== null) {
     axios
-      .put(
-        `https://crudcrud.com/api/7126b0d8ff3c4e948dd3f0364bf9c87d/students/${editingStudentId}`,
-        studentDetails,
-      )
+      .put(`${url}/${editingStudentId}`, studentDetails)
       .then(() => {
         editingStudentId = null;
         event.target.reset();
@@ -24,10 +23,7 @@ function handleFormSubmit(event) {
       .catch((err) => console.log(err));
   } else {
     axios
-      .post(
-        "https://crudcrud.com/api/7126b0d8ff3c4e948dd3f0364bf9c87d/students",
-        studentDetails,
-      )
+      .post(url, studentDetails)
       .then(() => {
         fetchStudents();
         event.target.reset();
@@ -64,9 +60,7 @@ function displayStudentDetails(student) {
 
 function deleteStudentDetails(student) {
   axios
-    .delete(
-      `https://crudcrud.com/api/7126b0d8ff3c4e948dd3f0364bf9c87d/students/${student._id}`,
-    )
+    .delete(`${url}/${student._id}`)
     .then((res) => {
       fetchStudents();
       console.log(res.data);
@@ -87,7 +81,7 @@ function editStudentDetails(student) {
 
 function fetchStudents() {
   axios
-    .get("https://crudcrud.com/api/7126b0d8ff3c4e948dd3f0364bf9c87d/students")
+    .get(url)
     .then((res) => {
       const ul = document.querySelector("ul");
       ul.innerHTML = "";
